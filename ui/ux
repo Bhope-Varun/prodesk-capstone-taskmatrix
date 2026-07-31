@@ -1,1 +1,81 @@
 
+                              ┌──────────────────────┐
+                              │        USERS         │
+                              ├──────────────────────┤
+                              │ PK _id              │
+                              │ name               │
+                              │ email              │
+                              │ password           │
+                              │ role              │
+                              │ avatar            │
+                              └─────────┬──────────┘
+                                        │
+                           creates (1:N)│
+                                        │
+                                        ▼
+                              ┌──────────────────────┐
+                              │      PROJECTS        │
+                              ├──────────────────────┤
+                              │ PK _id              │
+                              │ projectName         │
+                              │ description         │
+                              │ ownerId (FK)        │
+                              │ status              │
+                              └─────────┬──────────┘
+                                        │
+                           contains (1:N)
+                                        │
+                                        ▼
+                              ┌──────────────────────┐
+                              │        TASKS         │
+                              ├──────────────────────┤
+                              │ PK _id              │
+                              │ title              │
+                              │ description        │
+                              │ status             │
+                              │ priority           │
+                              │ dueDate            │
+                              │ projectId (FK)     │
+                              │ assignedTo (FK)    │
+                              │ createdBy (FK)     │
+                              └───────┬─────┬──────┘
+                                      │     │
+                     assigned to (N:1)│     │has (1:N)
+                                      │     │
+                                      ▼     ▼
+                           ┌────────────────────┐
+                           │      USERS         │
+                           └────────────────────┘
+
+                                ┌──────────────────────┐
+                                │      COMMENTS        │
+                                ├──────────────────────┤
+                                │ PK _id              │
+                                │ taskId (FK)         │
+                                │ userId (FK)         │
+                                │ comment             │
+                                │ createdAt           │
+                                └─────────▲───────────┘
+                                          │
+                                belongs to│(N:1)
+                                          │
+                                    ┌─────┴─────┐
+                                    │   TASKS   │
+                                    └───────────┘
+
+
+                                ┌──────────────────────┐
+                                │    ACTIVITY LOGS     │
+                                ├──────────────────────┤
+                                │ PK _id              │
+                                │ taskId (FK)         │
+                                │ userId (FK)         │
+                                │ action              │
+                                │ timestamp           │
+                                └─────────▲───────────┘
+                                          │
+                                belongs to│(N:1)
+                                          │
+                                    ┌─────┴─────┐
+                                    │   TASKS   │
+                                    └───────────┘
